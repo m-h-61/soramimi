@@ -11,6 +11,17 @@ from convert import prd_generate_substrings
 def load_model():
         return torch.load('nn_classifier.pt')
 
+def predict(input_tensor):
+    net = load_model()
+    # 推論モードに切り替え
+    net.eval()
+    # 推論の実行
+    with torch.no_grad():
+        y = net(input_tensor)
+    # 推論ラベルを取得
+    y = torch.argmax(F.softmax(y, dim=-1))
+    return y
+
 def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングが登場した名詞順に全て入っている
     tmp_result = prd_generate_substrings(text)
@@ -19,7 +30,7 @@ def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングをテンソルにして順番に推論し、予測ラベルを出す。
     results = []
     for substrings in nested_substrings_as_strings:
-        vectorizer = CountVectorizer(min_df=30)
+        vectorizer = CountVectorizer()
         sample_bow = vectorizer.fit_transform([substrings]).toarray()
         sample_tensor = torch.tensor(sample_bow, dtype=torch.float32)
         prediction = predict(sample_tensor)
@@ -42,9 +53,10 @@ def process_and_replace_nouns(text):
         replace_text = input_text.replace(noun_list[i], values[i])
     return replace_text
 
+
+
 if __name__ == '__main__':
     st.title('なんでも薬の名前に空耳する薬剤師に何か言ってみて。')
-    net = load_model()
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
 
@@ -53,3 +65,4 @@ if __name__ == '__main__':
         replace_result = process_and_replace_nouns(input_text)
         st.write('変換結果↓')
         st.write(replace_result)
+        
