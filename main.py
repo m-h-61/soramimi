@@ -3,14 +3,21 @@ import torch.nn.functional as F
 import re
 import openpyxl
 import torch
+import requests
 from sklearn.feature_extraction.text import CountVectorizer
 from convert import prd_generate_substrings
-from learning_model import text_train_val
-from learning_model import net
 
 @st.cache(allow_output_mutation=True)
 def load_model():
+    model_url = 'https://git-server.com/m-h-61/soramimi.git/info/lfs/nn_classifier.pt'
+    response = requests.get(model_url)
+    if response.status_code == 200:
+        with open('nn_classifier.pt', 'wb') as model_file:
+            model_file.write(response.content)
         return torch.load('nn_classifier.pt')
+    else:
+        print(f"Failed to download the model. Status code: {response.status_code}")
+        return None
 
 def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングが登場した名詞順に全て入っている
@@ -45,7 +52,7 @@ def process_and_replace_nouns(text):
 
 if __name__ == '__main__':
     st.title('なんでも薬の名前に空耳する薬剤師に何か言ってみて。')
-    net = Net()
+    net = load_model()
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
 
