@@ -3,12 +3,21 @@ import torch.nn.functional as F
 import re
 import openpyxl
 import torch
+import requests
 from sklearn.feature_extraction.text import CountVectorizer
 from convert import prd_generate_substrings
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-        return torch.load('https://git-server.com/m-h-61/soramimi.git/info/lfs/nn_classifier.pt')
+    model_url = 'https://git-server.com/m-h-61/soramimi.git/info/lfs/nn_classifier.pt'
+    response = requests.get(model_url)
+    if response.status_code == 200:
+        with open('nn_classifier.pt', 'wb') as model_file:
+            model_file.write(response.content)
+        return torch.load('nn_classifier.pt')
+    else:
+        print(f"Failed to download the model. Status code: {response.status_code}")
+        return None
 
 def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングが登場した名詞順に全て入っている
