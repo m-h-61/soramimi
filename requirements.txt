@@ -1,0 +1,10 @@
+streamlit
+numpy
+pandas
+scikit-learn
+mecab-python3
+pykakasi
+torch
+pytorch_lightning
+torchmetrics
+openpyxl
