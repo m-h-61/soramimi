@@ -5,7 +5,6 @@ import openpyxl
 import torch
 from sklearn.feature_extraction.text import CountVectorizer
 from convert import prd_generate_substrings
-from learning_model import net
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -44,7 +43,7 @@ def process_and_replace_nouns(text):
 
 if __name__ == '__main__':
     st.title('なんでも薬の名前に空耳する薬剤師に何か言ってみて。')
-    net = Net()
+    net = load_model()
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
 
