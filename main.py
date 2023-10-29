@@ -5,7 +5,6 @@ import openpyxl
 import torch
 from sklearn.feature_extraction.text import CountVectorizer
 from convert import prd_generate_substrings
-from learning_model import text_train_val
 from learning_model import net
 
 @st.cache(allow_output_mutation=True)
