@@ -1,4 +1,3 @@
-import pickle
 import streamlit as st
 import torch.nn.functional as F
 import re
@@ -8,20 +7,34 @@ import requests
 from sklearn.feature_extraction.text import CountVectorizer
 from convert import prd_generate_substrings
 
+class Net(pl.LightningModule):
+
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(bow_test.shape[1], 1000)
+        self.fc2 = nn.Linear(1000, 2940)        
+        prune.l1_unstructured(self.fc1, name="weight", amount=0.5)
+        prune.l1_unstructured(self.fc2, name="weight", amount=0.5)
+        
+    def forward(self, x):
+        h = self.fc1(x)
+        h = F.relu(h)
+        h = self.fc2(h)
+        return h
+
 @st.cache(allow_output_mutation=True)
 def load_model():
-    file_path = "model.pkl2"
-    with open(file_path, "rb") as file:
-        loaded_data = pickle.load(file)
-    return loaded_data
+    net = Net()
+    loaded_model = net.load_state_dict(torch.load('nn_classifier.pt'))
+    return loaded_model
 
 def predict(input_tensor):
-    net = load_model()
     # 推論モードに切り替え
-    net.eval()
+    loading_model = load_model()
+    loaded_model = loading_model.eval()
     # 推論の実行
     with torch.no_grad():
-        y = net(input_tensor)
+        y = loaded_model(input_tensor)
     # 推論ラベルを取得
     y = torch.argmax(F.softmax(y, dim=-1))
     return y
@@ -57,10 +70,8 @@ def process_and_replace_nouns(text):
         replace_text = input_text.replace(noun_list[i], values[i])
     return replace_text
 
-
-
 if __name__ == '__main__':
-    st.title('なんでも薬の名前に空耳する薬剤師に何か言ってみて。')
+    st.title('なんでも薬の名前に空耳する人に何か言ってみて。')
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
 
