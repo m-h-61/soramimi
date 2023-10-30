@@ -10,10 +10,10 @@ from convert import prd_generate_substrings
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-        file_path = "model.pkl2"
-        with open(file_path, "rb") as file:
+    file_path = "model.pkl2"
+    with open(file_path, "rb") as file:
         loaded_data = pickle.load(file)
-        return loaded_data　
+    return loaded_data
 
 def predict(input_tensor):
     net = load_model()
