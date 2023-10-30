@@ -1,3 +1,4 @@
+import pickle
 import streamlit as st
 import torch.nn.functional as F
 import re
@@ -9,7 +10,10 @@ from convert import prd_generate_substrings
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-        return torch.load('nn_classifier.pt')
+        file_path = "model.pkl2"
+        with open(file_path, "rb") as file:
+        loaded_data = pickle.load(file)
+        return loaded_data　
 
 def predict(input_tensor):
     net = load_model()
