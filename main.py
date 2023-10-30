@@ -1,3 +1,4 @@
+import pickle
 import streamlit as st
 import torch.nn.functional as F
 import re
@@ -9,15 +10,21 @@ from convert import prd_generate_substrings
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    model_url = 'https://git-server.com/m-h-61/soramimi.git/info/lfs/nn_classifier.pt'
-    response = requests.get(model_url)
-    if response.status_code == 200:
-        with open('nn_classifier.pt', 'wb') as model_file:
-            model_file.write(response.content)
-        return torch.load('nn_classifier.pt')
-    else:
-        print(f"Failed to download the model. Status code: {response.status_code}")
-        return None
+    file_path = "model.pkl2"
+    with open(file_path, "rb") as file:
+        loaded_data = pickle.load(file)
+    return loaded_data
+
+def predict(input_tensor):
+    net = load_model()
+    # 推論モードに切り替え
+    net.eval()
+    # 推論の実行
+    with torch.no_grad():
+        y = net(input_tensor)
+    # 推論ラベルを取得
+    y = torch.argmax(F.softmax(y, dim=-1))
+    return y
 
 def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングが登場した名詞順に全て入っている
@@ -27,7 +34,7 @@ def process_and_replace_nouns(text):
     # 半角スペースで区切られたサブストリングをテンソルにして順番に推論し、予測ラベルを出す。
     results = []
     for substrings in nested_substrings_as_strings:
-        vectorizer = CountVectorizer(min_df=30)
+        vectorizer = CountVectorizer()
         sample_bow = vectorizer.fit_transform([substrings]).toarray()
         sample_tensor = torch.tensor(sample_bow, dtype=torch.float32)
         prediction = predict(sample_tensor)
@@ -50,9 +57,10 @@ def process_and_replace_nouns(text):
         replace_text = input_text.replace(noun_list[i], values[i])
     return replace_text
 
+
+
 if __name__ == '__main__':
     st.title('なんでも薬の名前に空耳する薬剤師に何か言ってみて。')
-    net = load_model()
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
 
@@ -61,3 +69,4 @@ if __name__ == '__main__':
         replace_result = process_and_replace_nouns(input_text)
         st.write('変換結果↓')
         st.write(replace_result)
+        
