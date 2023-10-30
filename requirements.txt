@@ -10,3 +10,4 @@ torchmetrics
 openpyxl
 requests
 pickle
+unidic
