@@ -4,7 +4,7 @@ from pykakasi import kakasi
 
 def prd_generate_substrings(text):
     # MeCabの初期化
-    tagger = MeCab.Tagger('-d ./unidic')
+    tagger = MeCab.Tagger('-d C:\\Users\\Harada\\AppData\\Local\\Programs\\Python\\Python38\\Lib\\site-packages\\unidic')
     # 品詞分解を行う
     result = tagger.parse(text)
 
