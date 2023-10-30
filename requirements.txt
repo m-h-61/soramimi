@@ -9,5 +9,4 @@ pytorch_lightning
 torchmetrics
 openpyxl
 requests
-pickle
 unidic
