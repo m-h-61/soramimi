@@ -2,11 +2,11 @@ streamlit
 numpy
 pandas
 scikit-learn
-mecab-python3
+mecab-python3==1.0.8
 pykakasi
 torch
 pytorch_lightning
 torchmetrics
 openpyxl
 requests
-unidic
+unidic==1.1.0
