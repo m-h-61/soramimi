@@ -61,8 +61,6 @@ def process_and_replace_nouns(text):
         # 指定したセルの値を取得 (A列を表す列番号は1で固定)
         cell_value = sheet.cell(row=row_number + 2, column=1).value
         values.append(cell_value)
-    # このとき、valuesには、元のテキストのうち、名詞と判断されたものをアルファベットにして、テンソルにして、推論させてラベルが出てそのラベルに対応する薬品名がリストになっている。
-    # つまり、ここから元のテキストリストnoun_listと、valuesリストの値を置き換えて表示すれば、置き換え表示完了！
     # 名詞を正規表現を使用して抽出
     nouns = re.findall(r'\b\w+\b', input_text)  # 単語の境界を使った単語の抽出
     # 抽出した名詞と noun_list の一致を探し、一致した名詞を置き換え
