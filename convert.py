@@ -5,8 +5,9 @@ from pykakasi import kakasi
 def prd_generate_substrings(text):
     # MeCabの初期化
     # PATH = "C:/Program Files (x86)/MeCab/dic/ipadic"
-    tagger = MeCab.Tagger('-d "C:/Users/Harada/AppData/Local/Programs/Python/Python38/Lib/site-packages/unidic/dicdir"')
+    # tagger = MeCab.Tagger('-d "C:/Users/Harada/AppData/Local/Programs/Python/Python38/Lib/site-packages/unidic/dicdir"')
     # tagger = MeCab.Tagger('-r /dev/null')
+    tagger = MeCab.Tagger()
     # 品詞分解を行う
     result = tagger.parse(text)
 
