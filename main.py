@@ -70,15 +70,7 @@ def process_and_replace_nouns(text):
     return replace_text
 
 if __name__ == '__main__':
-    # ローカルパス
-    local_dicdir = "/C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir"
-    # デフォルトのパス
-    default_dicdir = "/home/adminuser/venv/lib/python3.9/site-packages/unidic/dicdir"
-    # パスを変更する
-    # この例ではローカルパスをデフォルトに設定していますが、必要に応じて逆も可能です。
-    st._global_container.source_code.code['source_code'][0] = local_dicdir
-
-
+    
     st.title('なんでも薬の名前に空耳する人に何か言ってみて。')
     # ユーザーが入力するテキストボックス
     input_text = st.text_area('（テキストボックスに文を入れてね！）', '')
