@@ -11,7 +11,7 @@ def prd_generate_substrings(text):
     # tagger = MeCab.Tagger('-r /dev/null -d /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir')
     # tagger = MeCab.Tagger()
     # tagger = MeCab.Tagger('-r /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir -d /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir')
-    tagger = MeCab.Tagger('-r /C:/Users/Harada/myenv/Lib/site-packages/MeCab/etc -d /C:/Users/Harada/myenv/Lib/site-packages/MeCab/dic/ipadic')
+    tagger = MeCab.Tagger('-r C:/Users/Harada/myenv/Lib/site-packages/MeCab/etc -d C:/Users/Harada/myenv/Lib/site-packages/MeCab/dic/ipadic')
     # 品詞分解を行う
     result = tagger.parse(text)
 
