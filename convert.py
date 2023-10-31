@@ -7,7 +7,7 @@ def prd_generate_substrings(text):
     # PATH = "C:/Program Files (x86)/MeCab/dic/ipadic"
     # tagger = MeCab.Tagger('-d "C:/Users/Harada/AppData/Local/Programs/Python/Python38/Lib/site-packages/unidic/dicdir"')
     # tagger = MeCab.Tagger('-r /dev/null')
-    tagger = MeCab.Tagger()
+    tagger = MeCab.Tagger("-r /usr/local/etc/mecabrc -d /usr/local/lib/mecab/dic/unidic/")
     # 品詞分解を行う
     result = tagger.parse(text)
 
