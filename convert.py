@@ -9,9 +9,9 @@ def prd_generate_substrings(text):
     # tagger = MeCab.Tagger('-r /dev/null')
     # tagger = MeCab.Tagger("-r /usr/local/etc/mecabrc -d /usr/local/lib/mecab/dic/unidic/")
     # tagger = MeCab.Tagger('-r /dev/null -d /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir')
-    # tagger = MeCab.Tagger()
+    tagger = MeCab.Tagger()
     # tagger = MeCab.Tagger('-r /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir -d /C:/Users/Harada/myenv/Lib/site-packages/unidic/dicdir')
-    tagger = MeCab.Tagger('-r /etc/mecabrc -d /home/mayumi/anaconda3/lib/python3.8/site-packages/unidic/dicdir')
+    # tagger = MeCab.Tagger('-r /etc/mecabrc -d /home/mayumi/anaconda3/lib/python3.8/site-packages/unidic/dicdir')
     # 品詞分解を行う
     result = tagger.parse(text)
 
