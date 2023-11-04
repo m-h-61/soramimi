@@ -3,6 +3,7 @@ numpy
 pandas
 scikit-learn
 mecab-python3==1.0.8
+MeCab
 pykakasi
 torch
 pytorch_lightning
